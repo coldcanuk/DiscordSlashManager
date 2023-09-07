@@ -1,6 +1,7 @@
 # Command Names parameter
 param (
-    [string[]]$CommandNames
+    [string[]]$CommandNames,
+    [switch]$debug
 )
 
 $ErrorActionPreference = "Stop"
@@ -18,42 +19,40 @@ $token = ($config | Where-Object {$_.varName -match "DISCORD_TOKEN"}).varValue
 $client_id = ($config | Where-Object {$_.varName -match "DISCORD_CLIENT_ID"}).varValue
 $guild_id = ($config | Where-Object {$_.varName -match "DISCORD_GUILD_ID"}).varValue
 
-<#
-$headers = @{
-    "Authorization" = "Bot $token"
-}
-/#>
 $headers = @{
     "Authorization" = ("Bot " + $token)
     "Accept" = "*/*"
     "User-Agent" = "PostEngineers/1.0"
 }
 
-
 # Register each command
 foreach ($command in $CommandNames) {
     $json = @{
         name        = $command
         description = "My $command command"
-        type = 1
-    } | ConvertTo-Json -Compress
+        type        = 1
+    } | ConvertTo-Json
 
     $uri = "https://discord.com/api/v10/applications/$client_id/guilds/$guild_id/commands"
 
-    Write-Host "URI: $uri"
-    Write-Host "JSON: $json"
-    Write-Host "HEADERS: " $headers
+    if ($debug) {
+        Write-Host "URI: $uri"
+        Write-Host "JSON: $json"
+        Write-Host "HEADERS: $headers"
+    }
 
     try {
-        $response = Invoke-RestMethod -Method Post -Headers $headers -Uri $uri -Body $json -ContentType 'application/json; charset=utf-8'
-        Write-Host $response
+        Invoke-RestMethod -Method Post -Headers $headers -Uri $uri -Body $json -ContentType 'application/json'
     } catch {
-        Write-Host $_.Exception.Response.StatusCode.Value__
-        Write-Host $_.Exception.Message
-        Write-Host $_.Exception.Response.Headers["X-RateLimit-Limit"]
-        Write-Host $_.Exception.Response.Headers["X-RateLimit-Remaining"]
-        Write-Host $_.Exception.Response.Headers["X-RateLimit-Reset"]
-        Write-Host $_.Exception
+        if ($debug) {
+            Write-Host $_.Exception.Response.StatusCode.Value__
+            Write-Host $_.Exception.Message
+            Write-Host $_.Exception.Response.Headers["X-RateLimit-Limit"]
+            Write-Host $_.Exception.Response.Headers["X-RateLimit-Remaining"]
+            Write-Host $_.Exception.Response.Headers["X-RateLimit-Reset"]
+        } else {
+            Write-Host $_.Exception.Message
+        }
     }
 }
 remove-variable -name config
