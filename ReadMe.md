@@ -1,35 +1,78 @@
-# new-discordslash.ps1
+# DiscordSlashManager
 
-## Description
+DiscordSlashManager is a PowerShell module designed to manage Discord slash commands. This module includes three main cmdlets:
 
-This PowerShell script allows you to easily register new slash commands for your Discord bot. Eventually it will be part of a module that also includes `get-discordslash.ps1` and `remove-discordslash.ps1`.
+- `new-discordslash.ps1`
+- `get-discordslash.ps1`
+- `remove-discordslash.ps1`
 
-## Requirements
+## new-discordslash.ps1
 
-- PowerShell 5.1 or higher
-- A Discord bot token, client ID, and guild ID
-- A CSV file named `config.csv` containing your Discord bot's credentials
+This cmdlet is used to create new slash commands for your Discord bot.
 
-## Usage
+### Usage
 
-Run the script from your PowerShell terminal:
-
-```
-.\new-discordslash.ps1 -CommandNames 'command1'
-```
-
-For multiple slash commands at once:
-
-```
+\`\`\`powershell
 .\new-discordslash.ps1 -CommandNames 'command1', 'command2'
-```
+\`\`\`
 
-For debug output:
+### Parameters
 
-```
-.\new-discordslash.ps1 -CommandNames 'command1', 'command2' -debug
-```
+- `-CommandNames`: An array of command names you want to create.
 
-## Credits
+### Example
 
-This script was developed with the assistance of OpenAI's API and OpenAI's ChatGPT.
+\`\`\`powershell
+.\new-discordslash.ps1 -CommandNames 'hello', 'world'
+\`\`\`
+
+## get-discordslash.ps1
+
+This cmdlet fetches all the existing slash commands for your Discord bot and outputs them in JSON format.
+
+### Usage
+
+\`\`\`powershell
+.\get-discordslash.ps1
+\`\`\`
+
+### Example
+
+\`\`\`powershell
+.\get-discordslash.ps1
+\`\`\`
+
+## remove-discordslash.ps1
+
+This cmdlet is used to remove existing slash commands. You can either remove a single command by its ID or multiple commands using JSON input.
+
+### Usage
+
+To remove a single command:
+
+\`\`\`powershell
+.\remove-discordslash.ps1 -CommandID "your_command_id_here"
+\`\`\`
+
+To remove multiple commands:
+
+\`\`\`powershell
+.\remove-discordslash.ps1 -JsonInput (.\get-discordslash.ps1)
+\`\`\`
+
+### Parameters
+
+- `-CommandID`: The ID of the command you want to remove.
+- `-JsonInput`: JSON formatted string containing the IDs of the commands you want to remove.
+
+### Examples
+
+\`\`\`powershell
+.\remove-discordslash.ps1 -CommandID "1234567890"
+\`\`\`
+
+\`\`\`powershell
+.\remove-discordslash.ps1 -JsonInput (.\get-discordslash.ps1)
+\`\`\`
+
+*This PowerShell module was developed with the assistance of OpenAI and ChatGPT.*
