@@ -45,9 +45,16 @@ if ($CommandID) {
 }
 
 # Bulk delete commands if JsonInput is provided
+[int64]$intCount = 0
 if ($JsonInput) {
     $commandsToDelete = $JsonInput | ConvertFrom-Json
     foreach ($command in $commandsToDelete) {
+        if ($intCount -eq 2)
+            {
+                write-host "Sleeping for 2 seconds to avoid a TooManyRequest error from the endpoint"
+                start-sleep -Seconds 2
+                [int64]$intCount = 0
+            }
         $uri = "https://discord.com/api/v10/applications/$client_id/guilds/$guild_id/commands/$($command.CommandID)"
         try {
             Invoke-RestMethod -Method Delete -Headers $headers -Uri $uri
@@ -55,6 +62,7 @@ if ($JsonInput) {
         } catch {
             Write-Host $_.Exception.Message
         }
+        $intCount++
     }
 }
 
