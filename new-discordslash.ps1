@@ -18,11 +18,12 @@ $config = Get-Content .\config.csv | ConvertFrom-Csv
 $token = ($config | Where-Object {$_.varName -match "DISCORD_TOKEN"}).varValue
 $client_id = ($config | Where-Object {$_.varName -match "DISCORD_CLIENT_ID"}).varValue
 $guild_id = ($config | Where-Object {$_.varName -match "DISCORD_GUILD_ID"}).varValue
-
+$appname = ($config | Where-Object {$_.varName -match "DISCORD_APP_NAME"}).varValue
+[string]$ua = $appname + "/1.0"
 $headers = @{
     "Authorization" = ("Bot " + $token)
     "Accept" = "*/*"
-    "User-Agent" = "PostEngineers/1.0"
+    "User-Agent" = $ua
 }
 
 # Register each command
