@@ -2,7 +2,7 @@
 
 ## Description
 
-This PowerShell script allows you to easily register new slash commands for your Discord bot. It's part of a module that also includes `get-discordslash.ps1` and `remove-discordslash.ps1`.
+This PowerShell script allows you to easily register new slash commands for your Discord bot. Eventually it will be part of a module that also includes `get-discordslash.ps1` and `remove-discordslash.ps1`.
 
 ## Requirements
 
