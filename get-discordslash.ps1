@@ -33,6 +33,7 @@ try {
         $commandInfo = @{
             "CommandID" = $_.id
             "CommandName" = $_.name
+            "Options" = $_.options
         }
         $commandData += $commandInfo
     }
