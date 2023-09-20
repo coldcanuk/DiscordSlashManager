@@ -13,14 +13,12 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Setup PowerShell
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y powershell
 
-    - name: Install PowerShell
-      run: sudo apt-get update && sudo apt-get install -y powershell
+    - name: Install required modules
+      run: pwsh -Command "Install-Module -Name PowerShellGet -Force -SkipPublisherCheck -Scope CurrentUser"
 
     - name: Publish to PSGallery
-      run: |
-          $psGalleryApiKey = "${{ secrets.PS_GALLERY_API_KEY }}"
-          Publish-Module -Path './' -NuGetApiKey $psGalleryApiKey -Repository PSGallery -Force
+      run: pwsh -Command "$psGalleryApiKey = '${{ secrets.PS_GALLERY_API_KEY }}'; Publish-Module -Path './' -NuGetApiKey $psGalleryApiKey -Repository PSGallery -Force"
