@@ -6,6 +6,14 @@ DiscordSlashManager is a PowerShell module designed to manage Discord slash comm
 - `get-discordslash`
 - `remove-discordslash`
 
+## Importing the Module
+
+To import the module, run the following command in your PowerShell terminal:
+
+```powershell
+Import-Module DiscordSlashManager
+```
+
 ## new-discordslash.ps1
 
 This cmdlet is used to create new slash commands for your Discord bot.
