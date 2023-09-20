@@ -83,4 +83,4 @@ Run the following command in your PowerShell terminal to remove a specific comma
 ```
 
 
-*This PowerShell module was developed with the assistance of OpenAI and ChatGPT.*
+*These PowerShell scripts were developed with the assistance of OpenAI and ChatGPT.*
