@@ -12,11 +12,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Setup PowerShell
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
+      uses: dahlbyk/setup-powershell@v1
     - name: Install required modules
-      run: Install-Module -Name PowerShellGet -Force -SkipPublisherCheck
+      run: Install-Module -Name PowerShellGet -Force -SkipPublisherCheck -Scope CurrentUser
     - name: Publish to PSGallery
       run: |
         $psGalleryApiKey = "${{ secrets.PS_GALLERY_API_KEY }}"
