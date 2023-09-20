@@ -1,5 +1,4 @@
 # get-discordslash.ps1
-
 # No parameters needed for this script
 $ErrorActionPreference = "Stop"
 
