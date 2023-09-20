@@ -1,3 +1,61 @@
+# Show-Usage-Remove
+function Show-Usage-Remove {
+    Write-Host "All parameters including Discord credentials are required to run this script." -ForegroundColor Yellow
+    Write-Host "Here's how you can run this cmdlet:" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host ".\remove-discordslash.ps1 -CommandID 'your_command_id_here' "
+    Write-Host "                          -token YourToken "
+    Write-Host "                          -client_id YourClientID "
+    Write-Host "                          -guild_id YourGuildID "
+    Write-Host "                          -appname YourAppName"
+    Write-Host ""
+    Write-Host "Or (This will remove all commands)" -ForegroundColor Red
+    Write-Host ""
+    Write-Host ".\remove-discordslash.ps1 -JsonInput (.\get-discordslash.ps1 -token YourToken -client_id YourClientID -guild_id YourGuildID -appname YourAppName) "
+    Write-Host "                          -token YourToken "
+    Write-Host "                          -client_id YourClientID "
+    Write-Host "                          -guild_id YourGuildID "
+    Write-Host "                          -appname YourAppName" 
+    write-host ""
+    exit
+}
+# Show-Usage-Get
+function Show-Usage-Get {
+    Write-Host "All parameters including Discord credentials are required to run this script." -ForegroundColor Yellow
+    Write-Host "Here's how you can run this cmdlet:" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host ".\get-discordslash.ps1 -token 'YourToken' "
+    Write-Host "                       -client_id 'YourClientID' "
+    Write-Host "                       -guild_id 'YourGuildID' "
+    Write-Host "                       -appname 'YourAppName'" -ForegroundColor Green
+    write-host ""
+    exit
+}
+# Show-Usage-New
+function Show-Usage-New {
+    Write-Host "All parameters including Discord credentials are required to run this script." -ForegroundColor Yellow
+    Write-Host "Here's how you can run this cmdlet:" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host ".\new-discordslash.ps1 -CommandNames 'post' "
+    Write-Host "                   -CommandDescriptions 'Post a message' "
+    Write-Host "                   -CommandOptions @{ name='message'; description='Your message'; type=3; required=`$true } "
+    Write-Host "                   -DiscordAppName YourAppName "
+    Write-Host "                   -token YourToken "
+    Write-Host "                   -client_id YourClientID "
+    Write-Host "                   -guild_id YourGuildID" 
+    Write-Host ""
+    Write-Host "Or" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "Usage: .\new-discordslash.ps1 -InputObject <YourObject> "
+    Write-Host "                             -DiscordAppName YourAppName "
+    Write-Host "                             -token YourToken "
+    Write-Host "                             -client_id YourClientID "
+    Write-Host "                             -guild_id YourGuildID"
+    Write-Host ""
+    Write-Host "Sample InputObject: @{ name='post'; description='Post a message'; options=@(@{ name='message'; description='Your message'; type=3; required=`$true }) }" -ForegroundColor Cyan
+    write-host ""
+    exit
+}
 # get-discordslash
 function Get-DiscordSlash {
     param (
@@ -7,20 +65,9 @@ function Get-DiscordSlash {
         [string]$appname
     )
     $ErrorActionPreference = "Stop"
-    function Show-Usage {
-        Write-Host "All parameters including Discord credentials are required to run this script." -ForegroundColor Yellow
-        Write-Host "Here's how you can run this cmdlet:" -ForegroundColor Yellow
-        Write-Host ""
-        Write-Host ".\get-discordslash.ps1 -token 'YourToken' "
-        Write-Host "                       -client_id 'YourClientID' "
-        Write-Host "                       -guild_id 'YourGuildID' "
-        Write-Host "                       -appname 'YourAppName'" -ForegroundColor Green
-        write-host ""
-        exit
-    }
 
     if (-not $token -or -not $client_id -or -not $guild_id -or -not $appname) {
-        Show-Usage
+        Show-Usage-Get
     }
 
     [string]$ua = $appname + "/1.0"
@@ -52,7 +99,7 @@ function Get-DiscordSlash {
 }
 
 # new-discordslash
-New-DiscordSlash {
+function New-DiscordSlash {
         # Parameters
         param (
             [string[]]$CommandNames,
@@ -68,35 +115,9 @@ New-DiscordSlash {
 
         $ErrorActionPreference = "Stop"
 
-        # Function to show usage
-        function Show-Usage {
-            Write-Host "All parameters including Discord credentials are required to run this script." -ForegroundColor Yellow
-            Write-Host "Here's how you can run this cmdlet:" -ForegroundColor Yellow
-            Write-Host ""
-            Write-Host ".\new-discordslash.ps1 -CommandNames 'post' "
-            Write-Host "                   -CommandDescriptions 'Post a message' "
-            Write-Host "                   -CommandOptions @{ name='message'; description='Your message'; type=3; required=`$true } "
-            Write-Host "                   -DiscordAppName YourAppName "
-            Write-Host "                   -token YourToken "
-            Write-Host "                   -client_id YourClientID "
-            Write-Host "                   -guild_id YourGuildID" 
-            Write-Host ""
-            Write-Host "Or" -ForegroundColor Yellow
-            Write-Host ""
-            Write-Host "Usage: .\new-discordslash.ps1 -InputObject <YourObject> "
-            Write-Host "                             -DiscordAppName YourAppName "
-            Write-Host "                             -token YourToken "
-            Write-Host "                             -client_id YourClientID "
-            Write-Host "                             -guild_id YourGuildID"
-            Write-Host ""
-            Write-Host "Sample InputObject: @{ name='post'; description='Post a message'; options=@(@{ name='message'; description='Your message'; type=3; required=`$true }) }" -ForegroundColor Cyan
-            write-host ""
-            exit
-        }
-
         # Check if mandatory parameters are empty
         if (-not $CommandNames -and -not $InputObject -or -not $DiscordAppName -or -not $token -or -not $client_id -or -not $guild_id) {
-            Show-Usage
+            Show-Usage-New
         }
 
         # Remove spaces from DiscordAppName
@@ -155,12 +176,8 @@ New-DiscordSlash {
         }
     }
 
-    # remove-discordslash
-    function Remove-DiscordSlash {
-
-
-    # remove-discordslash.ps1
-
+# remove-discordslash
+function Remove-DiscordSlash {
     param (
         [string]$CommandID,
         [string]$JsonInput,
@@ -172,29 +189,8 @@ New-DiscordSlash {
 
     $ErrorActionPreference = "Stop"
 
-    function Show-Usage {
-        Write-Host "All parameters including Discord credentials are required to run this script." -ForegroundColor Yellow
-        Write-Host "Here's how you can run this cmdlet:" -ForegroundColor Yellow
-        Write-Host ""
-        Write-Host ".\remove-discordslash.ps1 -CommandID 'your_command_id_here' "
-        Write-Host "                          -token YourToken "
-        Write-Host "                          -client_id YourClientID "
-        Write-Host "                          -guild_id YourGuildID "
-        Write-Host "                          -appname YourAppName"
-        Write-Host ""
-        Write-Host "Or (This will remove all commands)" -ForegroundColor Red
-        Write-Host ""
-        Write-Host ".\remove-discordslash.ps1 -JsonInput (.\get-discordslash.ps1 -token YourToken -client_id YourClientID -guild_id YourGuildID -appname YourAppName) "
-        Write-Host "                          -token YourToken "
-        Write-Host "                          -client_id YourClientID "
-        Write-Host "                          -guild_id YourGuildID "
-        Write-Host "                          -appname YourAppName" 
-        write-host ""
-        exit
-    }
-
     if (-not $CommandID -and -not $JsonInput -or -not $token -or -not $client_id -or -not $guild_id -or -not $appname) {
-        Show-Usage
+        Show-Usage-Remove
     }
 
     [string]$ua = $appname + "/1.0"
@@ -235,3 +231,4 @@ New-DiscordSlash {
         }
     }
 }
+Export-ModuleMember -Function Get-DiscordSlash, New-DiscordSlash, Remove-DiscordSlash
