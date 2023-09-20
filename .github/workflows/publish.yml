@@ -21,4 +21,4 @@ jobs:
       run: pwsh -Command "Install-Module -Name PowerShellGet -Force -SkipPublisherCheck -Scope CurrentUser"
 
     - name: Publish to PSGallery
-      run: pwsh -Command "$psGalleryApiKey = '${{ secrets.PS_GALLERY_API_KEY }}'; Publish-Module -Path './' -NuGetApiKey $psGalleryApiKey -Repository PSGallery -Force"
+      run: pwsh -Command "Publish-Module -Path './' -NuGetApiKey '${{ secrets.PS_GALLERY_API_KEY }}' -Repository PSGallery -Force"
