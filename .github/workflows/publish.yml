@@ -20,8 +20,5 @@ jobs:
     - name: Install required modules
       run: pwsh -Command "Install-Module -Name PowerShellGet -Force -SkipPublisherCheck -Scope CurrentUser"
 
-    - name: Unlist Previous Version from PSGallery
-      run: pwsh -Command "Unpublish-Module -Name 'DiscordSlashManager' -Version  ((Find-Module -Name 'DiscordSlashManager' -Repository 'PSGallery').version) -NuGetApiKey '${{ secrets.PS_GALLERY_API_KEY }}'"
-
     - name: Publish to PSGallery
       run: pwsh -Command "Publish-Module -Path './' -NuGetApiKey '${{ secrets.PS_GALLERY_API_KEY }}' -Repository PSGallery -Force"
