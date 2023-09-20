@@ -17,8 +17,9 @@ function Show-Usage-Remove {
     Write-Host "                          -guild_id YourGuildID "
     Write-Host "                          -appname YourAppName" 
     write-host ""
-    exit
+    write-host "Review the usage instructions" -ForegroundColor Red
 }
+
 # Show-Usage-Get
 function Show-Usage-Get {
     Write-Host "All parameters including Discord credentials are required to run this script." -ForegroundColor Yellow
@@ -29,7 +30,7 @@ function Show-Usage-Get {
     Write-Host "                       -guild_id 'YourGuildID' "
     Write-Host "                       -appname 'YourAppName'" -ForegroundColor Green
     write-host ""
-    exit
+    write-host "Review the usage instructions" -ForegroundColor Red
 }
 # Show-Usage-New
 function Show-Usage-New {
@@ -54,7 +55,7 @@ function Show-Usage-New {
     Write-Host ""
     Write-Host "Sample InputObject: @{ name='post'; description='Post a message'; options=@(@{ name='message'; description='Your message'; type=3; required=`$true }) }" -ForegroundColor Cyan
     write-host ""
-    exit
+    write-host "Review the usage instructions" -ForegroundColor Red
 }
 # get-discordslash
 function Get-DiscordSlash {
@@ -68,6 +69,7 @@ function Get-DiscordSlash {
 
     if (-not $token -or -not $client_id -or -not $guild_id -or -not $appname) {
         Show-Usage-Get
+        return "Stopped"
     }
 
     [string]$ua = $appname + "/1.0"
@@ -118,6 +120,7 @@ function New-DiscordSlash {
         # Check if mandatory parameters are empty
         if (-not $CommandNames -and -not $InputObject -or -not $DiscordAppName -or -not $token -or -not $client_id -or -not $guild_id) {
             Show-Usage-New
+            return "Stopped"
         }
 
         # Remove spaces from DiscordAppName
@@ -191,6 +194,7 @@ function Remove-DiscordSlash {
 
     if (-not $CommandID -and -not $JsonInput -or -not $token -or -not $client_id -or -not $guild_id -or -not $appname) {
         Show-Usage-Remove
+        return "Stopped"
     }
 
     [string]$ua = $appname + "/1.0"

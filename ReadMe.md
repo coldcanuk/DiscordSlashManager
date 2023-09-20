@@ -2,15 +2,15 @@
 
 DiscordSlashManager is a PowerShell module designed to manage Discord slash commands. This module includes three main cmdlets:
 
-- `new-discordslash.ps1`
-- `get-discordslash.ps1`
-- `remove-discordslash.ps1`
+- `new-discordslash`
+- `get-discordslash`
+- `remove-discordslash`
 
 ## new-discordslash.ps1
 
 This cmdlet is used to create new slash commands for your Discord bot.
 
-### Usage Instructions for `new-discordslash.ps1`
+### Usage Instructions for `new-discordslash`
 
 **All parameters including Discord credentials are required to run this script.**
 
@@ -19,7 +19,7 @@ This cmdlet is used to create new slash commands for your Discord bot.
 Run the following command in your PowerShell terminal:
 
 ```powershell
-.\new-discordslash.ps1 -CommandNames 'post' \
+new-discordslash -CommandNames 'post' \
                        -CommandDescriptions 'Post a message' \
                        -CommandOptions @{ name='message'; description='Your message'; type=3; required=$true } \
                        -DiscordAppName YourAppName \
@@ -31,7 +31,7 @@ Or
 
 Run the following command if you have an input object:
 ```powershell
-.\new-discordslash.ps1 -InputObject <YourObject> \
+new-discordslash -InputObject <YourObject> \
                        -DiscordAppName YourAppName \
                        -token YourToken \
                        -client_id YourClientID \
@@ -43,11 +43,11 @@ Here's a sample input object you can use:
 @{ name='post'; description='Post a message'; options=@(@{ name='message'; description='Your message'; type=3; required=$true }) }
 ```
 
-## get-discordslash.ps1
+## get-discordslash
 
 This cmdlet fetches all the existing slash commands for your Discord bot and outputs them in JSON format.
 
-### Usage Instructions for `get-discordslash.ps1`
+### Usage Instructions for `get-discordslash.`
 
 **All parameters including Discord credentials are required to run this script.**
 
@@ -56,17 +56,17 @@ This cmdlet fetches all the existing slash commands for your Discord bot and out
 Run the following command in your PowerShell terminal:
 
 ```powershell
-.\get-discordslash.ps1 -token 'YourToken' \
+get-discordslash -token 'YourToken' \
                        -client_id 'YourClientID' \
                        -guild_id 'YourGuildID' \
                        -appname 'YourAppName'
 ```
 
-## remove-discordslash.ps1
+## remove-discordslash
 
 This cmdlet is used to remove existing slash commands. You can either remove a single command by its ID or multiple commands using JSON input.
 
-### Usage Instructions for `remove-discordslash.ps1`
+### Usage Instructions for `remove-discordslash`
 
 **All parameters including Discord credentials are required to run this script.**
 
@@ -75,7 +75,7 @@ This cmdlet is used to remove existing slash commands. You can either remove a s
 Run the following command in your PowerShell terminal to remove a specific command:
 
 ```powershell
-.\remove-discordslash.ps1 -CommandID 'your_command_id_here' \
+remove-discordslash -CommandID 'your_command_id_here' \
                           -token YourToken \
                           -client_id YourClientID \
                           -guild_id YourGuildID \
