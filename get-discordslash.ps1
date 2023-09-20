@@ -1,31 +1,42 @@
 # get-discordslash.ps1
-# No parameters needed for this script
+
+param (
+    [string]$token,
+    [string]$client_id,
+    [string]$guild_id,
+    [string]$appname
+)
+
 $ErrorActionPreference = "Stop"
 
-# Read the config.csv file to get Discord credentials
-$config = @()
-$config = Get-Content .\config.csv | ConvertFrom-Csv
+function Show-Usage {
+    Write-Host "All parameters including Discord credentials are required to run this script." -ForegroundColor Yellow
+    Write-Host "Here's how you can run this cmdlet:" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host ".\get-discordslash.ps1 -token 'YourToken' "
+    Write-Host "                       -client_id 'YourClientID' "
+    Write-Host "                       -guild_id 'YourGuildID' "
+    Write-Host "                       -appname 'YourAppName'" -ForegroundColor Green
+    write-host ""
+    exit
+}
 
-# Extract the credentials
-$token = ($config | Where-Object {$_.varName -match "DISCORD_TOKEN"}).varValue
-$client_id = ($config | Where-Object {$_.varName -match "DISCORD_CLIENT_ID"}).varValue
-$guild_id = ($config | Where-Object {$_.varName -match "DISCORD_GUILD_ID"}).varValue
-$appname = ($config | where-object {$_.varname -match "DISCORD_APP_NAME"}).varValue
+if (-not $token -or -not $client_id -or -not $guild_id -or -not $appname) {
+    Show-Usage
+}
+
 [string]$ua = $appname + "/1.0"
-# Prepare the headers"
+
 $headers = @{
     "Authorization" = ("Bot " + $token)
     "Accept" = "*/*"
     "User-Agent" = $ua
 }
 
-# Prepare the URI
 $uri = "https://discord.com/api/v10/applications/$client_id/guilds/$guild_id/commands"
 
-# Initialize an array to hold the command data
 $commandData = @()
 
-# Fetch the list of commands
 try {
     $response = Invoke-RestMethod -Method Get -Headers $headers -Uri $uri
     $response | ForEach-Object {
@@ -40,6 +51,3 @@ try {
 } catch {
     Write-Host $_.Exception.Message
 }
-
-# Clean up
-Remove-Variable -Name config

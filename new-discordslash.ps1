@@ -5,6 +5,9 @@ param (
     [hashtable[]]$CommandOptions,
     [psobject]$InputObject,
     [string]$DiscordAppName,
+    [string]$token,
+    [string]$client_id,
+    [string]$guild_id,
     [switch]$debug
 )
 
@@ -12,26 +15,37 @@ $ErrorActionPreference = "Stop"
 
 # Function to show usage
 function Show-Usage {
-    Write-Host "Your DiscordAppName will be used as part of the user agent string. Please avoid characters that would impact User-Agent"
-    Write-Host "Usage: .\new-discordslash.ps1 -CommandNames 'post' -CommandDescriptions 'Post a message' -CommandOptions @{ name='message'; description='Your message'; type=3; required=`$true } -DiscordAppName YourAppName"
-    Write-Host "Or"
-    Write-Host "Usage: .\new-discordslash.ps1 -InputObject <YourObject> -DiscordAppName YourAppName"
+    Write-Host "All parameters including Discord credentials are required to run this script." -ForegroundColor Yellow
+    Write-Host "Here's how you can run this cmdlet:" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host ".\new-discordslash.ps1 -CommandNames 'post' "
+    Write-Host "                   -CommandDescriptions 'Post a message' "
+    Write-Host "                   -CommandOptions @{ name='message'; description='Your message'; type=3; required=`$true } "
+    Write-Host "                   -DiscordAppName YourAppName "
+    Write-Host "                   -token YourToken "
+    Write-Host "                   -client_id YourClientID "
+    Write-Host "                   -guild_id YourGuildID" 
+    Write-Host ""
+    Write-Host "Or" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "Usage: .\new-discordslash.ps1 -InputObject <YourObject> "
+    Write-Host "                             -DiscordAppName YourAppName "
+    Write-Host "                             -token YourToken "
+    Write-Host "                             -client_id YourClientID "
+    Write-Host "                             -guild_id YourGuildID"
+    Write-Host ""
+    Write-Host "Sample InputObject: @{ name='post'; description='Post a message'; options=@(@{ name='message'; description='Your message'; type=3; required=`$true }) }" -ForegroundColor Cyan
+    write-host ""
     exit
 }
 
 # Check if mandatory parameters are empty
-if (-not $CommandNames -and -not $InputObject -or -not $DiscordAppName) {
+if (-not $CommandNames -and -not $InputObject -or -not $DiscordAppName -or -not $token -or -not $client_id -or -not $guild_id) {
     Show-Usage
 }
 
 # Remove spaces from DiscordAppName
 $DiscordAppName = $DiscordAppName -replace '\s',''
-
-# Read the config.csv file to get Discord credentials
-$config = Get-Content .\config.csv | ConvertFrom-Csv
-$token = ($config | Where-Object {$_.varName -eq "DISCORD_TOKEN"}).varValue
-$client_id = ($config | Where-Object {$_.varName -eq "DISCORD_CLIENT_ID"}).varValue
-$guild_id = ($config | Where-Object {$_.varName -eq "DISCORD_GUILD_ID"}).varValue
 
 # Prepare the headers
 $headers = @{
@@ -84,6 +98,3 @@ if ($InputObject) {
         Register-Command $name $description $options
     }
 }
-
-# Clean up
-Remove-Variable -Name config
