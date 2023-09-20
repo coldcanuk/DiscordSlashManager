@@ -22,3 +22,4 @@ jobs:
 
     - name: Publish to PSGallery
       run: pwsh -Command "Publish-Module -Path './' -NuGetApiKey '${{ secrets.PS_GALLERY_API_KEY }}' -Repository PSGallery -Force"
+      
