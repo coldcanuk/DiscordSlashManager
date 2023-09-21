@@ -1,6 +1,6 @@
 @{
     RootModule = 'DiscordSlashManager.psm1'
-    ModuleVersion = '1.3.5.5'
+    ModuleVersion = '1.3.5.6'
     GUID = '1d176fd1-aea9-47d2-88ce-23ca20b2cf59'
     Author = 'Chuck'
     CompanyName = 'Individual'
