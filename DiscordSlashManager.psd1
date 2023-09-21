@@ -7,9 +7,13 @@
     Copyright = 'GNU GPLv3'
     Description = 'Elevate your Discord experience with DiscordSlashManager. Seamlessly create, manage, and remove slash commands directly from PowerShell. Your gateway to smarter Discord interactions. Want to contribute? Join us on GitHub!'
     PowerShellVersion = '5.1'
-    Tags = 'Discord', 'SlashCommands', 'Social', 'Communication', 'API', 'ChatOps', 'Automation', 'Powershell', 'JSON', 'Messaging'
     FunctionsToExport = @('Get-DiscordSlash', 'New-DiscordSlash', 'Remove-DiscordSlash')
-    LicenseUri = 'https://github.com/coldcanuk/DiscordSlashManager/blob/main/LICENSE'
-    ProjectUri = 'https://github.com/coldcanuk/DiscordSlashManager'
-    IconUri = 'https://raw.githubusercontent.com/coldcanuk/DiscordSlashManager/main/dsmicon128_128.png'
+    PrivateData = @{
+        PSData = @{
+            Tags = @('Discord', 'SlashCommands', 'Social', 'Communication', 'API', 'ChatOps', 'Automation', 'Powershell', 'JSON', 'Messaging')
+            LicenseUri = 'https://github.com/coldcanuk/DiscordSlashManager/blob/main/LICENSE'
+            ProjectUri = 'https://github.com/coldcanuk/DiscordSlashManager'
+            IconUri = 'https://raw.githubusercontent.com/coldcanuk/DiscordSlashManager/main/dsmicon128_128.png'
+        }
+    }
 }
