@@ -1,6 +1,6 @@
 ---
 name: "Pull Request"
-about: "Create a pull request to contribute to this project | Créez une pull request pour contribuer à ce projet"
+about: "Create a pull request to contribute to this project"
 title: ''
 labels: ''
 assignees: ''
@@ -17,3 +17,5 @@ assignees: ''
 
 ### Testing Done
 <!-- Describe the testing done to verify the changes. -->
+
+---
