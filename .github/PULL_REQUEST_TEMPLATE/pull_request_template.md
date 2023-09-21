@@ -17,14 +17,3 @@ assignees: ''
 
 ### Testing Done
 <!-- Describe the testing done to verify the changes. -->
-
-## Français
-
-### Objectif de la PR
-<!-- Décrivez brièvement l'objectif de cette PR. -->
-
-### Modifications Apportées
-<!-- Énumérez les modifications apportées dans cette PR. -->
-
-### Tests Effectués
-<!-- Décrivez les tests effectués pour vérifier les modifications. -->
