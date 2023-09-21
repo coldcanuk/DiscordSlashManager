@@ -1,6 +1,6 @@
 ---
 name: Pull Request
-about: Create a pull request to contribute to this project / Créez une pull request pour contribuer à ce projet
+about: Create a pull request to contribute to this project Créez une pull request pour contribuer à ce projet
 title: ''
 labels: ''
 assignees: ''
