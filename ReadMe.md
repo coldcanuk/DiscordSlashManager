@@ -1,7 +1,3 @@
-Sure! Here's the provided markdown content updated with the splatted code:
-
----
-
 # DiscordSlashManager
 
 DiscordSlashManager is a PowerShell module designed to manage Discord slash commands. This module includes three main cmdlets:
@@ -126,7 +122,5 @@ $paramsRemove = @{
 
 remove-discordslash @paramsRemove
 ```
-
----
 
 *These PowerShell scripts were developed with the assistance of OpenAI and ChatGPT.*
